@@ -85,4 +85,3 @@ def lcd_string(message, line):
 
 	for i in range(LCD_WIDTH):
 		lcd_byte(ord(message[i]), LCD_CHR)
-

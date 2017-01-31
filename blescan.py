@@ -187,7 +187,7 @@ def parse_events(sock, loop_count=100):
                     #print "\tAdstring=", Adstring
  		#    myFullList.append(Adstring)
                    # if(get_host(uuid) and get_dup(myFullList, 'uuid',uuid)):
-                    if(get_host(uuid) and get_dup(myFullList, 'uuid',uuid) and int(rssi) > -50):
+                    if(get_host(uuid) and get_dup(myFullList, 'uuid',uuid) and int(rssi) > -47):
                         myFullList.append(Adstring)
                 done = True
     sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, old_filter )
