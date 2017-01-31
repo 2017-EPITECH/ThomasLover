@@ -3,10 +3,10 @@ import time
 
 LCD_RS = 21
 LCD_E = 20
-LCD_D4 = 25
-LCD_D5 = 24
-LCD_D6 = 23
-LCD_D7 = 18
+LCD_D4 = 12
+LCD_D5 = 25
+LCD_D6 = 24
+LCD_D7 = 23
 
 LCD_WIDTH = 16
 LCD_CHR = True
@@ -17,52 +17,6 @@ LCD_LINE_2 = 0xC0
 
 E_PULSE = 0.0005
 E_DELAY = 0.0005
-
-def main():
-	GPIO.setwarnings(False)
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(LCD_E, GPIO.OUT)
-	GPIO.setup(LCD_RS, GPIO.OUT)
-	GPIO.setup(LCD_D4, GPIO.OUT)
-	GPIO.setup(LCD_D5, GPIO.OUT)
-	GPIO.setup(LCD_D6, GPIO.OUT)
-	GPIO.setup(LCD_D7, GPIO.OUT)
-
-	lcd_init()
-
-	while True :
-		lcd_string("Grs", LCD_LINE_1)
-		time.sleep(2)
-		lcd_string("le", LCD_LINE_1)
-		lcd_string("QWERTY", LCD_LINE_2)
-		time.sleep(1)
-		lcd_string("", LCD_LINE_1)
-		lcd_string("", LCD_LINE_2)
-		lcd_string("A!", LCD_LINE_1)
-		time.sleep(2)
-		lcd_string("I", LCD_LINE_1)
-		lcd_string("J", LCD_LINE_2)
-		time.sleep(2)
-		lcd_byte(0x01, False)
-		lcd_string("String", LCD_LINE_1)
-		lcd_string("    Monitor  !", LCD_LINE_2)
-		time.sleep(2)
-		lcd_string("PingPong", LCD_LINE_1)
-		time.sleep(1)
-		lcd_string("       Apple!", LCD_LINE_2)
-		time.sleep(1)
-		lcd_string("", LCD_LINE_1)
-		lcd_string("", LCD_LINE_2)
-		time.sleep(5)
-
-def lcd_init():
-	lcd_byte(0x33, LCD_CMD)
-	lcd_byte(0x32, LCD_CMD)
-	lcd_byte(0x06, LCD_CMD)
-	lcd_byte(0x0C, LCD_CMD)
-	lcd_byte(0x28, LCD_CMD)
-	lcd_byte(0x01, LCD_CMD)
-	time.sleep(E_DELAY)
 
 def lcd_byte(bits, mode):
 	GPIO.output(LCD_RS, mode)
@@ -99,6 +53,24 @@ def lcd_byte(bits, mode):
 
 	lcd_toggle_enable()
 
+def lcd_init():
+	GPIO.setwarnings(False)
+	GPIO.setup(LCD_E, GPIO.OUT)
+	GPIO.setup(LCD_RS, GPIO.OUT)
+	GPIO.setup(LCD_D4, GPIO.OUT)
+	GPIO.setup(LCD_D5, GPIO.OUT)
+	GPIO.setup(LCD_D6, GPIO.OUT)
+	GPIO.setup(LCD_D7, GPIO.OUT)
+
+	lcd_byte(0x33, LCD_CMD)
+	lcd_byte(0x32, LCD_CMD)
+	lcd_byte(0x06, LCD_CMD)
+	lcd_byte(0x0C, LCD_CMD)
+	lcd_byte(0x28, LCD_CMD)
+	lcd_byte(0x01, LCD_CMD)
+	time.sleep(E_DELAY)
+
+
 def lcd_toggle_enable():
 	time.sleep(E_DELAY)
 	GPIO.output(LCD_E, True)
@@ -114,11 +86,3 @@ def lcd_string(message, line):
 	for i in range(LCD_WIDTH):
 		lcd_byte(ord(message[i]), LCD_CHR)
 
-try :
-	main()
-except KeyboardInterrupt:
-	pass
-finally:
-	lcd_byte(0x01, LCD_CMD)
-	lcd_string("Good Bye!", LCD_LINE_1)
-	GPIO.cleanup()
