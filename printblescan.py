@@ -32,7 +32,6 @@ def servo_mortor_control():
             GPIO.output(led, 1)
             sleep(5)
             servo_motor.ChangeDutyCycle(left_angle)
-            sleep(0.5)
             print("Button Released")
             lcd.lcd_string("Door is closed", lcd.LCD_LINE_1)
             GPIO.output(led, 0)
