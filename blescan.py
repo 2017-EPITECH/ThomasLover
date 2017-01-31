@@ -1,19 +1,4 @@
-# BLE iBeaconScanner based on https://github.com/adamf/BLE/blob/master/ble-scanner.py
-# JCS 06/07/14
-
 DEBUG = False
-# BLE scanner based on https://github.com/adamf/BLE/blob/master/ble-scanner.py
-# BLE scanner, based on https://code.google.com/p/pybluez/source/browse/trunk/examples/advanced/inquiry-with-rssi.py
-
-# https://github.com/pauloborges/bluez/blob/master/tools/hcitool.c for lescan
-# https://kernel.googlesource.com/pub/scm/bluetooth/bluez/+/5.6/lib/hci.h for opcodes
-# https://github.com/pauloborges/bluez/blob/master/lib/hci.c#L2782 for functions used by lescan
-
-# performs a simple device inquiry, and returns a list of ble advertizements 
-# discovered device
-
-# NOTE: Python's struct.pack() will add padding bytes unless you make the endianness explicit. Little endian
-# should be used for BLE. Always start a struct.pack() format string with "<"
 
 import os
 import sys
@@ -146,10 +131,6 @@ def calc_dist_2(rssi, txp):
 def parse_events(sock, loop_count=100):
     old_filter = sock.getsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, 14)
 
-    # perform a device inquiry on bluetooth device #0
-    # The inquiry should last 8 * 1.28 = 10.24 seconds
-    # before the inquiry is performed, bluez should flush its cache of
-    # previously discovered devices
     flt = bluez.hci_filter_new()
     bluez.hci_filter_all_events(flt)
     bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)

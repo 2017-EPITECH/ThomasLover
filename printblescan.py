@@ -1,6 +1,3 @@
-# test BLE Scanning software
-# jcs 6/8/2014
-
 import blescan
 import sys
 import LCD as lcd
