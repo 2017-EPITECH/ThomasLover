@@ -55,14 +55,14 @@ blescan.hci_le_set_scan_parameters(sock)
 blescan.hci_enable_le_scan(sock)
 
 while True:
-	returnedList = blescan.parse_events(sock, 10) 
-        len_returnedList = len(returnedList)
+	returned_list = blescan.parse_events(sock, 10) 
+        len_returnedList = len(returned_list)
 
         if(len_returnedList > 0):
             servo_mortor_control()
 
 	print "----------"
-	for beacon in returnedList:
+	for beacon in returned_list:
 		print beacon
         lcd.lcd_string("", lcd.LCD_LINE_1)
         sleep(1)
