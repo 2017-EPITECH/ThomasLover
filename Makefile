@@ -1,4 +1,4 @@
 all :
 
 run :
-	sudo python printblescan.py
+	sudo python smart.py
